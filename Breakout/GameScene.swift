@@ -16,11 +16,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var brick = SKSpriteNode()
     
     override func didMove(to view: SKView) {
+        
+        physicsWorld.contactDelegate = self
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+    
       createBackground()
       makeBall()
       makePaddle()
       makeBrick()
       makeLoseZone()
+        
+        ball.physicsBody?.isDynamic = true
+        ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 3))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -86,12 +93,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func makeBrick() {
         brick = SKSpriteNode(color: UIColor.blue, size: CGSize(width: frame.width/5, height: frame.height/25))
-        brick.position = CGPoint(x: frame.midX, y: frame.minY - 30)
+        brick.position = CGPoint(x: frame.midX, y: frame.maxY - 30)
         brick.name = "brick"
         brick.physicsBody = SKPhysicsBody(rectangleOf: brick.size)
         brick.physicsBody?.isDynamic = false
         addChild(brick)
     }
+    
     func makeLoseZone() {
         let loseZone = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width, height: 50))
         loseZone.position = CGPoint(x: frame.midX, y: frame.minY + 25)
@@ -100,6 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         loseZone.physicsBody?.isDynamic = false
         addChild(loseZone)
 }
+    
     
 
 }
