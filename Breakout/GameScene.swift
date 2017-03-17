@@ -14,7 +14,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var ball = SKShapeNode()
     var paddle = SKSpriteNode()
     var brick = SKSpriteNode()
-    
+    var image = UIImageView()
+    var bricks = SKSpriteNode()
     override func didMove(to view: SKView) {
         
         physicsWorld.contactDelegate = self
@@ -23,8 +24,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       createBackground()
       makeBall()
       makePaddle()
-      makeBrick()
       makeLoseZone()
+      makeBricks()
         
         ball.physicsBody?.isDynamic = true
         ball.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 3))
@@ -111,11 +112,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         paddle.physicsBody = SKPhysicsBody(rectangleOf: paddle.size)
         paddle.physicsBody?.isDynamic = false
         addChild(paddle)
-        
+    }
+    func makeBricks()  {
+        let count = Int(frame.width)/55
+        let xOffset = (Int(frame.width) - (count * 55))/2 + Int(frame.midX) + 25
+        let top = Int(frame.maxY)
+        for x in 0..<count {
+            makeBrick(x: x * 55 + xOffset, y: top - 20)
+    }
+       // for x in 0..<count {
+        //    makeBrick(x: x * 55 + xOffset, y: top - 45, image: Data)
+     //   }
+       /// for x in 0..<count {
+         ///   makeBrick(x: x * 55 + xOffset, y: top - 70, image: Data)
+        //}
     }
     
-    func makeBrick() {
-        brick = SKSpriteNode(color: UIColor.blue, size: CGSize(width: frame.width/5, height: frame.height/25))
+    func makeBrick(x: Int, y: Int) {
+        bricks = SKSpriteNode(imageNamed: "level1")
+        bricks = SKSpriteNode()
+        //brick = SKSpriteNode(color: UIColor.blue, size: CGSize(width: frame.width/5, height: frame.height/25))
         brick.position = CGPoint(x: frame.midX, y: frame.maxY - 30)
         brick.name = "brick"
         brick.physicsBody = SKPhysicsBody(rectangleOf: brick.size)
