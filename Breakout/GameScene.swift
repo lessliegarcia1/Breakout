@@ -138,11 +138,16 @@ func makeBrick() {
         bricks.removeAll()
       //  removedBricks = 0
         
-        let count = 5
+        let numberOfBricks = 5
         let top = Int(frame.maxY)
-        for x in 0..<count {
-            makeBrick()
+        for x in 0..<numberOfBricks {
+            var brick = SKSpriteNode(imageNamed: "level1")
+            let x = CGFloat(arc4random() % UInt32(size.width))
+            let y = CGFloat(arc4random() % UInt32(size.height))
+        //    brick.position = CGPoint(x,y)
+            bricks.append(brick)
             
+            makeBrick()
         }
     }
 func makeLoseZone() {
